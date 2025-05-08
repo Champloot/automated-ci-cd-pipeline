@@ -3,14 +3,12 @@ pipeline {
   stages {
     stage('Deploy') {
       steps {
-        sshCommand(
-          remote: '192.168.56.11',  // Ansible Controller
-          command: """
-            cd ${env.WORKSPACE}/ansible &&   // Используем путь из Jenkins workspace
-            ansible-playbook -i inventory.ini deploy.yml
-          """,
-          sshCredentials: [username: 'vagrant', keyFile: '/path/to/ssh-key']
-        )
+        sh """
+          ssh -o StrictHostKeyChecking=no \
+              -i /path/to/ssh/key \
+              vagrant@192.168.56.11 \
+              'ansible-playbook -i ansible/inventory.ini ansible/deploy-app.yml'
+        """
       }
     }
   }
