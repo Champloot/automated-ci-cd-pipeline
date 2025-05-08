@@ -1,0 +1,28 @@
+---
+- name: Deploy Web Application
+  hosts: webservers  # Группа из инвентаря
+  become: yes        # Выполнять задачи с правами sudo
+  
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Copy custom index.html
+      copy:
+        src: index.html        # Файл на AnsibleVM
+        dest: /var/www/html/   # Путь на WebserverVM
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes  # Автозапуск при загрузке
