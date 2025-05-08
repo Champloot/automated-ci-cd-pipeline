@@ -5,9 +5,9 @@ pipeline {
       steps {
         sh """
           ssh -o StrictHostKeyChecking=no \
-              -i /path/to/ssh/key \
+              -i /var/lib/jenkins/.ssh/id_rsa \
               vagrant@192.168.56.11 \
-              'ansible-playbook -i ansible/inventory.ini ansible/deploy-app.yml'
+              'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
         """
       }
     }
