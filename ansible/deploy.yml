@@ -1,28 +1,37 @@
----
 - name: Deploy Web Application
-  hosts: webservers  # Группа из инвентаря
-  become: yes        # Выполнять задачи с правами sudo
-  
+  hosts: webservers
+  become: yes
+
   tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
+      tags: update
 
     - name: Install Nginx
       apt:
         name: nginx
         state: latest
+      tags: nginx
 
-    - name: Copy custom index.html
-      copy:
-        src: index.html        # Файл на AnsibleVM
-        dest: /var/www/html/   # Путь на WebserverVM
-        owner: www-data
-        group: www-data
+    - name: Download index.html from GitHub
+      get_url:
+        url: "https://raw.githubusercontent.com/Champloot/devops_practice/main/ansible/files/index.html"
+        dest: /var/www/html/index.html
         mode: '0644'
+        force: yes
+      become: yes
 
     - name: Ensure Nginx is running
       service:
         name: nginx
         state: started
-        enabled: yes  # Автозапуск при загрузке
+        enabled: yes
+      tags: service
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+        
