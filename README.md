@@ -31,7 +31,7 @@
 git clone https://github.com/Champloot/devops_practice.git
 cd devops_practice
 ```
-2. Запуск виртуальных машин
+### 2. Запуск виртуальных машин
 ```bash
 vagrant up
 ```
@@ -43,7 +43,7 @@ Ansible: 192.168.56.11.
 
 Nginx: 192.168.56.12.
 
-3. Настройка Jenkins
+### 3. Настройка Jenkins
 Откройте веб-интерфейс Jenkins: http://192.168.56.10:8080.
 
 Получите пароль из файла на VM_1:
@@ -62,7 +62,7 @@ SCM: Укажите URL репозитория GitHub.
 
 Script Path: Jenkinsfile.
 
-4. Настройка Ansible
+### 4. Настройка Ansible
 Инвентарь (inventory.ini) и плейбуки (deploy.yml) уже настроены в репозитории.
 
 Проверьте работу Ansible вручную:
