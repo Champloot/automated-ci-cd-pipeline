@@ -31,66 +31,51 @@
 git clone https://github.com/Champloot/devops_practice.git
 cd devops_practice
 ```
+
 ### 2. Запуск виртуальных машин
 ```bash
 vagrant up
 ```
 После выполнения команды будут созданы три виртуальные машины:
-
-Jenkins: 192.168.56.10.
-
-Ansible: 192.168.56.11.
-
-Nginx: 192.168.56.12.
+- Jenkins: `192.168.56.10`.
+- Ansible: `192.168.56.11`.
+- Nginx: `192.168.56.12`.
 
 ### 3. Настройка Jenkins
-Откройте веб-интерфейс Jenkins: http://192.168.56.10:8080.
-
-Получите пароль из файла на VM_1:
-
-```bash
-vagrant ssh jenkins
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-```
-Установите рекомендованные плагины и создайте администратора.
-
-Настройте Pipeline:
-
-Тип задачи: Pipeline.
-
-SCM: Укажите URL репозитория GitHub.
-
-Script Path: Jenkinsfile.
+1. Откройте веб-интерфейс Jenkins: `http://192.168.56.10:8080`.
+2. Получите пароль из файла на VM_1:
+   ```bash
+   vagrant ssh jenkins
+   sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   ```
+3. Установите рекомендованные плагины и создайте администратора.
+4. Настройте Pipeline:
+   - **Тип задачи**: Pipeline.
+   - **SCM**: Укажите URL репозитория GitHub.
+   - **Script Path**: `Jenkinsfile`.
 
 ### 4. Настройка Ansible
-Инвентарь (inventory.ini) и плейбуки (deploy.yml) уже настроены в репозитории.
+- Инвентарь (`inventory.ini`) и плейбуки (`deploy.yml`) уже настроены в репозитории.
+- Проверьте работу Ansible вручную:
+  ```bash
+  ansible-playbook -i ansible/inventory.ini ansible/deploy.yml
+  ```
 
-Проверьте работу Ansible вручную:
+## Использование
+1. Внесите изменения в файл `index.html` в репозитории GitHub.
+2. Запустите Pipeline в Jenkins (вручную или через веб-хук).
+3. Проверьте обновленную страницу по адресу: `http://192.168.56.12`.
 
-```bash
-ansible-playbook -i ansible/inventory.ini ansible/deploy.yml
-```
-Использование
-Внесите изменения в файл index.html в репозитории GitHub.
+## Архитектура
+![Архитектура](docs/architecture.png)
+1. **GitHub**: Хранилище кода и триггер изменений.
+2. **Jenkins**: Оркестрация CI/CD пайплайна.
+3. **Ansible**: Настройка веб-сервера через плейбуки.
+4. **Nginx**: Обслуживание статического контента.
 
-Запустите Pipeline в Jenkins (вручную или через веб-хук).
-
-Проверьте обновленную страницу по адресу: http://192.168.56.12.
-
-Архитектура
-Архитектура
-
-GitHub: Хранилище кода и триггер изменений.
-
-Jenkins: Оркестрация CI/CD пайплайна.
-
-Ansible: Настройка веб-сервера через плейбуки.
-
-Nginx: Обслуживание статического контента.
-
-Примеры
-```Jenkinsfile
-groovy
+## Примеры
+### Jenkinsfile
+```groovy
 pipeline {
     agent any
     stages {
@@ -107,14 +92,15 @@ pipeline {
     }
 }
 ```
-Проблемы и ограничения
-Проект развернут локально. Для продакшена рекомендуется использовать облачные решения (AWS, GCP).
 
-Веб-хуки между GitHub и Jenkins требуют дополнительной настройки для автоматизации.
+## Проблемы и ограничения
+- Проект развернут локально. Для продакшена рекомендуется использовать облачные решения (AWS, GCP).
+- Веб-хуки между GitHub и Jenkins требуют дополнительной настройки для автоматизации.
 
-Лицензия
-Проект распространяется под лицензией MIT.
+## Лицензия
+Проект распространяется под лицензией [MIT](LICENSE).
 
-Автор
-Artem Verchenko
-GitHub: Champloot
+## Автор
+Artem Verchenko  
+GitHub: [Champloot](https://github.com/Champloot)
+```
