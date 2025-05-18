@@ -72,26 +72,6 @@ vagrant up
 3. **Ansible**: Настройка веб-сервера через плейбуки.
 4. **Nginx**: Обслуживание статического контента.
 
-## Примеры
-### Jenkinsfile
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Deploy') {
-            steps {
-                sh """
-                ssh -o StrictHostKeyChecking=no \
-                    -i /var/lib/jenkins/.ssh/id_rsa \
-                    vagrant@192.168.56.11 \
-                    'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
-                """
-            }
-        }
-    }
-}
-```
-
 ## Проблемы и ограничения
 - Проект развернут локально. Для продакшена рекомендуется использовать облачные решения (AWS, GCP).
 - Веб-хуки между GitHub и Jenkins требуют дополнительной настройки для автоматизации.
