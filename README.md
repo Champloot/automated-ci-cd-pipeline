@@ -80,4 +80,3 @@ vagrant up
 ## Автор
 Artem Verchenko  
 GitHub: [Champloot](https://github.com/Champloot)
-```
