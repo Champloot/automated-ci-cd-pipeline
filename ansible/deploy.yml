@@ -16,7 +16,7 @@
 
     - name: Download index.html from GitHub
       get_url:
-        url: "https://raw.githubusercontent.com/Champloot/devops_practice/main/ansible/files/index.html"
+        url: "https://raw.githubusercontent.com/Champloot/automated-ci-cd-pipeline/main/ansible/files/index.html"
         dest: /var/www/html/index.html
         mode: '0644'
         force: yes
